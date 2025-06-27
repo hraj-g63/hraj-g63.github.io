@@ -1,6 +1,68 @@
-<html>
-  <body>
-    <h1>Hello World</h1>
-    <p>My GitHub Pages site!</p>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Research Website</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; padding:0; line-height:1.6; }
+    header, footer { background:#004080; color:#fff; padding:1em; text-align:center; }
+    nav a { margin:0 10px; color:#fff; text-decoration:none; }
+    .container { max-width:1000px; margin:1em auto; padding:0 1em; }
+    section { margin-bottom:2em; }
+    h2 { color:#004080; border-bottom:2px solid #004080; padding-bottom:0.3em; }
+    .publication { margin-bottom:0.5em; }
+    @media (max-width:600px) {
+      nav a { display:block; margin:5px 0; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Dr. Jane Doe — Research & Publications</h1>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#publications">Publications</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main class="container">
+  <section id="about">
+    <h2>About Me</h2>
+    <p>I am an Assistant Professor in Computational Biology at XYZ University. My research focuses on cancer genomics and AI-driven bioinformatics.</p>
+  </section>
+
+  <section id="publications">
+    <h2>Selected Publications</h2>
+    <div class="publication">
+      <strong>Doe, J.</strong> “Title of Paper One.” <em>Journal Name</em>, 2024.
+    </div>
+    <div class="publication">
+      <strong>Doe, J.</strong> “Title of Paper Two.” <em>Conference Name</em>, 2023.
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Research Projects</h2>
+    <ul>
+      <li><strong>Project Alpha:</strong> Developing ML models for early cancer detection.</li>
+      <li><strong>Project Beta:</strong> High-throughput genomic data analysis pipelines.</li>
+    </ul>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:jane.doe@xyz.edu">jane.doe@xyz.edu</a></p>
+    <p>Office: Room 123, XYZ Building, XYZ University.</p>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2025 Dr. Jane Doe</p>
+</footer>
+
+</body>
 </html>
