@@ -1,69 +1,1670 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SPECTRAL LABS</title>
-  <style>
-    body { font-family: Garamond, sans-serif; margin:0; padding:0; line-height:1.6; }
-    header, footer { background:#135174; color:#fff; padding:1em; text-align:center; }
-    nav a { margin:0 10px; color:#fff; text-decoration:none; }
-    .container { max-width:1000px; margin:1em auto; padding:0 1em; }
-    section { margin-bottom:2em; }
-    h2 { color:#004080; border-bottom:2px solid #004080; padding-bottom:0.3em; }
-    .publication { margin-bottom:0.5em; }
-    @media (max-width:600px) {
-      nav a { display:block; margin:5px 0; }
-    }
-  </style>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Himanshu Raj — Mathematics, Fluid Mechanics & Scientific Computing</title>
+
+    <meta name="description"
+          content="Himanshu Raj — Mathematics, Fluid Mechanics, Scientific Computing and Scientific Machine Learning.">
+
+    <!-- =========================
+         FONTS
+    ========================== -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;500&display=swap"
+          rel="stylesheet">
+
+
+    <!-- =========================
+         MATHJAX
+    ========================== -->
+
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+
+    <script async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+
+
+    <!-- =========================
+         STYLE
+    ========================== -->
+
+    <style>
+
+        /* ---------- RESET ---------- */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* ---------- GLOBAL ---------- */
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #fafafa;
+            color: #171717;
+            font-family: "Inter", sans-serif;
+            line-height: 1.7;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+
+        /* ---------- NAVBAR ---------- */
+
+        nav {
+
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            background: rgba(250,250,250,0.94);
+            backdrop-filter: blur(12px);
+
+            border-bottom: 1px solid #dedede;
+
+            padding: 18px 7%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+
+        .logo {
+
+            font-size: 18px;
+            font-weight: 600;
+
+            letter-spacing: 2px;
+        }
+
+
+        .nav-links {
+
+            display: flex;
+            gap: 28px;
+
+            list-style: none;
+
+            font-size: 13px;
+        }
+
+
+        .nav-links a {
+
+            color: #555;
+
+            transition: 0.2s;
+        }
+
+
+        .nav-links a:hover {
+
+            color: #000;
+        }
+
+
+        /* ---------- HERO ---------- */
+
+        .hero {
+
+            max-width: 1150px;
+
+            margin: auto;
+
+            padding: 140px 7% 130px;
+        }
+
+
+        .eyebrow {
+
+            font-size: 13px;
+
+            letter-spacing: 3px;
+
+            text-transform: uppercase;
+
+            color: #777;
+
+            margin-bottom: 25px;
+        }
+
+
+        .hero h1 {
+
+            font-family: "Playfair Display", serif;
+
+            font-weight: 400;
+
+            font-size: clamp(48px, 7vw, 92px);
+
+            line-height: 1.02;
+
+            max-width: 900px;
+
+            margin-bottom: 35px;
+        }
+
+
+        .hero h1 span {
+
+            color: #777;
+        }
+
+
+        .hero-description {
+
+            max-width: 650px;
+
+            color: #555;
+
+            font-size: 18px;
+
+            line-height: 1.8;
+        }
+
+
+        .hero-buttons {
+
+            margin-top: 38px;
+
+            display: flex;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .button {
+
+            padding: 12px 20px;
+
+            border: 1px solid #222;
+
+            font-size: 13px;
+
+            transition: 0.25s;
+        }
+
+
+        .button:hover {
+
+            background: #171717;
+
+            color: white;
+        }
+
+
+        /* ---------- SECTION ---------- */
+
+        section {
+
+            max-width: 1150px;
+
+            margin: auto;
+
+            padding: 100px 7%;
+
+            border-top: 1px solid #dedede;
+        }
+
+
+        .section-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: baseline;
+
+            margin-bottom: 55px;
+        }
+
+
+        .section-number {
+
+            color: #999;
+
+            font-size: 13px;
+        }
+
+
+        .section-title {
+
+            font-family: "Playfair Display", serif;
+
+            font-size: 42px;
+
+            font-weight: 400;
+        }
+
+
+        /* ---------- ABOUT ---------- */
+
+        .about-grid {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 70px;
+        }
+
+
+        .about-text {
+
+            font-family: "Playfair Display", serif;
+
+            font-size: 25px;
+
+            line-height: 1.55;
+        }
+
+
+        .about-details {
+
+            color: #666;
+
+            font-size: 15px;
+        }
+
+
+        /* ---------- TOPICS ---------- */
+
+        .topic-grid {
+
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 1px;
+
+            background: #d8d8d8;
+
+            border: 1px solid #d8d8d8;
+        }
+
+
+        .topic {
+
+            background: #fafafa;
+
+            padding: 35px;
+
+            min-height: 210px;
+
+            transition: 0.25s;
+        }
+
+
+        .topic:hover {
+
+            background: white;
+
+            transform: translateY(-3px);
+        }
+
+
+        .topic-number {
+
+            font-size: 12px;
+
+            color: #999;
+
+            margin-bottom: 25px;
+        }
+
+
+        .topic h3 {
+
+            font-family: "Playfair Display", serif;
+
+            font-size: 25px;
+
+            font-weight: 400;
+
+            margin-bottom: 12px;
+        }
+
+
+        .topic p {
+
+            font-size: 14px;
+
+            color: #666;
+        }
+
+
+        /* ---------- BLOG ---------- */
+
+        .blog-post {
+
+            display: grid;
+
+            grid-template-columns: 150px 1fr;
+
+            gap: 45px;
+
+            padding: 30px 0;
+
+            border-bottom: 1px solid #ddd;
+        }
+
+
+        .blog-date {
+
+            font-size: 12px;
+
+            color: #999;
+
+            letter-spacing: 1px;
+        }
+
+
+        .blog-content h3 {
+
+            font-family: "Playfair Display", serif;
+
+            font-weight: 400;
+
+            font-size: 27px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .blog-content p {
+
+            color: #666;
+
+            font-size: 14px;
+
+            max-width: 650px;
+        }
+
+
+        .read-more {
+
+            display: inline-block;
+
+            margin-top: 15px;
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            border-bottom: 1px solid #222;
+        }
+
+
+        /* ---------- MATH FEATURE ---------- */
+
+        .math-feature {
+
+            background: #171717;
+
+            color: white;
+
+            padding: 60px;
+
+            margin-top: 60px;
+        }
+
+
+        .math-feature p {
+
+            color: #aaa;
+
+            font-size: 13px;
+
+            margin-bottom: 20px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 2px;
+        }
+
+
+        .equation {
+
+            font-size: 32px;
+
+            margin: 30px 0;
+        }
+
+
+        .math-feature a {
+
+            font-size: 13px;
+
+            border-bottom: 1px solid #aaa;
+
+            padding-bottom: 4px;
+        }
+
+
+        /* ---------- VIDEOS ---------- */
+
+        .video-grid {
+
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 35px;
+        }
+
+
+        .video {
+
+            border: 1px solid #ddd;
+
+            background: white;
+
+            padding: 15px;
+        }
+
+
+        .video iframe {
+
+            width: 100%;
+
+            aspect-ratio: 16 / 9;
+
+            border: none;
+        }
+
+
+        .video h3 {
+
+            font-family: "Playfair Display", serif;
+
+            font-weight: 400;
+
+            font-size: 21px;
+
+            padding: 18px 5px 5px;
+        }
+
+
+        .video p {
+
+            font-size: 13px;
+
+            color: #777;
+
+            padding: 0 5px 15px;
+        }
+
+
+        /* ---------- RESEARCH ---------- */
+
+        .research-item {
+
+            display: grid;
+
+            grid-template-columns: 250px 1fr;
+
+            gap: 50px;
+
+            padding: 35px 0;
+
+            border-bottom: 1px solid #ddd;
+        }
+
+
+        .research-item h3 {
+
+            font-family: "Playfair Display", serif;
+
+            font-size: 27px;
+
+            font-weight: 400;
+        }
+
+
+        .research-item p {
+
+            max-width: 650px;
+
+            color: #666;
+
+            font-size: 15px;
+        }
+
+
+        .research-tags {
+
+            margin-top: 15px;
+        }
+
+
+        .tag {
+
+            display: inline-block;
+
+            border: 1px solid #ccc;
+
+            padding: 4px 9px;
+
+            font-size: 11px;
+
+            margin-right: 5px;
+
+            color: #666;
+        }
+
+
+        /* ---------- FOOTER ---------- */
+
+        footer {
+
+            max-width: 1150px;
+
+            margin: auto;
+
+            padding: 70px 7%;
+
+            border-top: 1px solid #ddd;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            color: #777;
+
+            font-size: 13px;
+        }
+
+
+        /* ---------- MOBILE ---------- */
+
+        @media(max-width: 800px) {
+
+            nav {
+
+                flex-direction: column;
+
+                gap: 15px;
+            }
+
+
+            .nav-links {
+
+                gap: 15px;
+
+                flex-wrap: wrap;
+
+                justify-content: center;
+            }
+
+
+            .hero {
+
+                padding-top: 90px;
+            }
+
+
+            .about-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .topic-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .video-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .blog-post {
+
+                grid-template-columns: 1fr;
+
+                gap: 8px;
+            }
+
+
+            .research-item {
+
+                grid-template-columns: 1fr;
+
+                gap: 10px;
+            }
+
+
+            footer {
+
+                flex-direction: column;
+
+                gap: 15px;
+            }
+
+        }
+
+    </style>
+
 </head>
+
+
 <body>
 
-<header>
-  <h1>SPECTRAL-HIMANSHU</h1>
-  <nav>
-    <a href="#about">About</a>
-    <a href="#publications">Publications</a>
-    <a href="#projects">Projects</a>
-    <a href="https://www.youtube.com/@eig_himanshu">Videos</a></a> 
-    <a href="#contact">Contact</a>
-  </nav>
+
+<!-- =========================================================
+     NAVIGATION
+========================================================= -->
+
+<nav>
+
+    <a href="#" class="logo">
+        SPECTRAL LABS
+    </a>
+
+
+    <ul class="nav-links">
+
+        <li>
+            <a href="#about">About</a>
+        </li>
+
+        <li>
+            <a href="#mathematics">Mathematics</a>
+        </li>
+
+        <li>
+            <a href="#fluids">Fluids</a>
+        </li>
+
+        <li>
+            <a href="#blog">Blog</a>
+        </li>
+
+        <li>
+            <a href="#lectures">Lectures</a>
+        </li>
+
+        <li>
+            <a href="#research">Research</a>
+        </li>
+
+    </ul>
+
+</nav>
+
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<header class="hero">
+
+    <div class="eyebrow">
+        Mathematics · Fluid Mechanics · Scientific Computing
+    </div>
+
+
+    <h1>
+
+        Understanding
+        <span>physical flows</span>
+        through mathematics.
+
+    </h1>
+
+
+    <p class="hero-description">
+
+        I explore fluid mechanics, mathematical modelling,
+        numerical methods and scientific machine learning.
+        This is my notebook of ideas, derivations,
+        computational experiments and research.
+
+    </p>
+
+
+    <div class="hero-buttons">
+
+        <a href="#blog" class="button">
+            Read the Notes
+        </a>
+
+        <a href="#lectures" class="button">
+            Watch Lectures
+        </a>
+
+        <a href="#research" class="button">
+            Explore Research
+        </a>
+
+    </div>
+
 </header>
 
-<main class="container">
-  <section id="about">
-    <h2>About Me</h2>
-    <p>I am a Research Scholar in Climate Science at IIT Bombay. My research focuses on Turbulence Modelling, Large Eddy Simulations, Scientific Computing, Computational Fluid Dynamics, Planetary Convection, Planetary Boundary Layer,  and Data Driven Engineering and Science.</p>
-  </section>
 
-  <section id="publications">
-    <h2>Selected Publications</h2>
-    <div class="publication">
-      <strong>Doe, J.</strong> “Title of Paper One.” <em>Journal Name</em>, 2024.
+
+<!-- =========================================================
+     ABOUT
+========================================================= -->
+
+<section id="about">
+
+    <div class="section-header">
+
+        <h2 class="section-title">
+            About
+        </h2>
+
+        <span class="section-number">
+            01
+        </span>
+
     </div>
-    <div class="publication">
-      <strong>Doe, J.</strong> “Title of Paper Two.” <em>Conference Name</em>, 2023.
+
+
+    <div class="about-grid">
+
+        <div class="about-text">
+
+            Mathematics gives us the language.
+            Physics gives us the questions.
+            Computation lets us explore them.
+
+        </div>
+
+
+        <div class="about-details">
+
+            <p>
+
+                I work at the intersection of fluid mechanics,
+                atmospheric science, numerical computation
+                and scientific machine learning.
+
+            </p>
+
+            <br>
+
+            <p>
+
+                I use this website to document what I learn:
+                from mathematical derivations and numerical
+                experiments to research problems and lectures.
+
+            </p>
+
+        </div>
+
     </div>
-  </section>
 
-  <section id="projects">
-    <h2>Research Projects</h2>
-    <ul>
-      <li><strong>Project Alpha:</strong> Developing ML models for early cancer detection.</li>
-      <li><strong>Project Beta:</strong> High-throughput genomic data analysis pipelines.</li>
-    </ul>
-  </section>
+</section>
 
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>Email: <a href="mailto:hraj.g63@gmail.com">hraj.g63@gmail.com</a></p>
-    <p>Ping: +91 7061231021.</p>
-  </section>
-</main>
+
+
+<!-- =========================================================
+     MATHEMATICS
+========================================================= -->
+
+<section id="mathematics">
+
+    <div class="section-header">
+
+        <h2 class="section-title">
+            Mathematics
+        </h2>
+
+        <span class="section-number">
+            02
+        </span>
+
+    </div>
+
+
+    <div class="topic-grid">
+
+
+        <div class="topic">
+
+            <div class="topic-number">
+                01
+            </div>
+
+            <h3>
+                Vector Calculus
+            </h3>
+
+            <p>
+                Gradients, divergence, curl, tensors,
+                line integrals and the geometry of fields.
+            </p>
+
+        </div>
+
+
+        <div class="topic">
+
+            <div class="topic-number">
+                02
+            </div>
+
+            <h3>
+                Differential Equations
+            </h3>
+
+            <p>
+                ODEs, PDEs, conservation laws,
+                characteristics and dynamical systems.
+            </p>
+
+        </div>
+
+
+        <div class="topic">
+
+            <div class="topic-number">
+                03
+            </div>
+
+            <h3>
+                Numerical Methods
+            </h3>
+
+            <p>
+                Differentiation, integration,
+                interpolation, discretization and solvers.
+            </p>
+
+        </div>
+
+
+        <div class="topic">
+
+            <div class="topic-number">
+                04
+            </div>
+
+            <h3>
+                Linear Algebra
+            </h3>
+
+            <p>
+                Eigenvalues, eigenvectors, matrices,
+                SVD and low-dimensional representations.
+            </p>
+
+        </div>
+
+
+        <div class="topic">
+
+            <div class="topic-number">
+                05
+            </div>
+
+            <h3>
+                Fourier Analysis
+            </h3>
+
+            <p>
+                Fourier series, transforms, spectral methods
+                and frequency-domain thinking.
+            </p>
+
+        </div>
+
+
+        <div class="topic">
+
+            <div class="topic-number">
+                06
+            </div>
+
+            <h3>
+                Dynamical Systems
+            </h3>
+
+            <p>
+                Phase space, stability, nonlinear dynamics
+                and reduced-order representations.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- FEATURE EQUATION -->
+
+    <div class="math-feature">
+
+        <p>
+            A question worth understanding
+        </p>
+
+
+        <div class="equation">
+
+            $$\frac{D\mathbf{u}}{Dt}
+            =
+            \frac{\partial\mathbf{u}}{\partial t}
+            +
+            (\mathbf{u}\cdot\nabla)\mathbf{u}$$
+
+        </div>
+
+
+        <a href="#blog">
+            Explore the derivation →
+        </a>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     FLUID MECHANICS
+========================================================= -->
+
+<section id="fluids">
+
+    <div class="section-header">
+
+        <h2 class="section-title">
+            Fluid Mechanics
+        </h2>
+
+        <span class="section-number">
+            03
+        </span>
+
+    </div>
+
+
+    <div class="topic-grid">
+
+
+        <div class="topic">
+
+            <div class="topic-number">
+                01
+            </div>
+
+            <h3>
+                Kinematics
+            </h3>
+
+            <p>
+                Velocity fields, acceleration,
+                deformation and rotation.
+            </p>
+
+        </div>
+
+
+        <div class="topic">
+
+            <div class="topic-number">
+                02
+            </div>
+
+            <h3>
+                Dynamics
+            </h3>
+
+            <p>
+                Momentum conservation,
+                pressure and Navier–Stokes equations.
+            </p>
+
+        </div>
+
+
+        <div class="topic">
+
+            <div class="topic-number">
+                03
+            </div>
+
+            <h3>
+                Vorticity
+            </h3>
+
+            <p>
+                Rotation, circulation, vortex dynamics
+                and the geometry of fluid motion.
+            </p>
+
+        </div>
+
+
+        <div class="topic">
+
+            <div class="topic-number">
+                04
+            </div>
+
+            <h3>
+                Instability
+            </h3>
+
+            <p>
+                Growth of perturbations,
+                transition and nonlinear behaviour.
+            </p>
+
+        </div>
+
+
+        <div class="topic">
+
+            <div class="topic-number">
+                05
+            </div>
+
+            <h3>
+                Turbulence
+            </h3>
+
+            <p>
+                Multiscale motion, energy cascades,
+                coherent structures and modelling.
+            </p>
+
+        </div>
+
+
+        <div class="topic">
+
+            <div class="topic-number">
+                06
+            </div>
+
+            <h3>
+                Computational Fluids
+            </h3>
+
+            <p>
+                CFD, numerical PDEs,
+                reduced-order models and data-driven methods.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     BLOG
+========================================================= -->
+
+<section id="blog">
+
+    <div class="section-header">
+
+        <h2 class="section-title">
+            Mathematical Notes
+        </h2>
+
+        <span class="section-number">
+            04
+        </span>
+
+    </div>
+
+
+    <!-- POST 1 -->
+
+    <article class="blog-post">
+
+        <div class="blog-date">
+            OCT 2026
+        </div>
+
+
+        <div class="blog-content">
+
+            <h3>
+                What Does Vorticity Actually Measure?
+            </h3>
+
+            <p>
+
+                A geometric interpretation of
+                $\boldsymbol{\omega} = \nabla \times \mathbf{u}$
+                and what it means for a fluid element.
+
+            </p>
+
+            <a href="#" class="read-more">
+                Read →
+            </a>
+
+        </div>
+
+    </article>
+
+
+    <!-- POST 2 -->
+
+    <article class="blog-post">
+
+        <div class="blog-date">
+            OCT 2026
+        </div>
+
+
+        <div class="blog-content">
+
+            <h3>
+                The Material Derivative
+            </h3>
+
+            <p>
+
+                Why following a fluid particle produces
+                the combination of local and convective acceleration.
+
+            </p>
+
+            <a href="#" class="read-more">
+                Read →
+            </a>
+
+        </div>
+
+    </article>
+
+
+    <!-- POST 3 -->
+
+    <article class="blog-post">
+
+        <div class="blog-date">
+            SEP 2026
+        </div>
+
+
+        <div class="blog-content">
+
+            <h3>
+                Numerical Differentiation from First Principles
+            </h3>
+
+            <p>
+
+                Forward, backward and central differences,
+                truncation error and what the computer actually computes.
+
+            </p>
+
+            <a href="#" class="read-more">
+                Read →
+            </a>
+
+        </div>
+
+    </article>
+
+
+    <!-- POST 4 -->
+
+    <article class="blog-post">
+
+        <div class="blog-date">
+            SEP 2026
+        </div>
+
+
+        <div class="blog-content">
+
+            <h3>
+                Why Conservation Laws Become PDEs
+            </h3>
+
+            <p>
+
+                Connecting physical conservation principles
+                to mathematical differential equations.
+
+            </p>
+
+            <a href="#" class="read-more">
+                Read →
+            </a>
+
+        </div>
+
+    </article>
+
+</section>
+
+
+
+<!-- =========================================================
+     LECTURES
+========================================================= -->
+
+<section id="lectures">
+
+    <div class="section-header">
+
+        <h2 class="section-title">
+            Lectures
+        </h2>
+
+        <span class="section-number">
+            05
+        </span>
+
+    </div>
+
+
+    <div class="video-grid">
+
+
+        <!-- VIDEO 1 -->
+
+        <div class="video">
+
+            <!--
+                Replace VIDEO_ID with your YouTube video ID
+            -->
+
+            <iframe
+                src="https://www.youtube.com/embed/VIDEO_ID"
+                title="Fluid Mechanics Lecture 01"
+                allowfullscreen>
+            </iframe>
+
+
+            <h3>
+                Lecture 01 — Fluid Kinematics
+            </h3>
+
+
+            <p>
+                Introduction to describing fluid motion.
+            </p>
+
+        </div>
+
+
+        <!-- VIDEO 2 -->
+
+        <div class="video">
+
+            <iframe
+                src="https://www.youtube.com/embed/VIDEO_ID"
+                title="Fluid Mechanics Lecture 02"
+                allowfullscreen>
+            </iframe>
+
+
+            <h3>
+                Lecture 02 — Velocity Fields
+            </h3>
+
+
+            <p>
+                Eulerian description of fluid motion.
+            </p>
+
+        </div>
+
+
+        <!-- VIDEO 3 -->
+
+        <div class="video">
+
+            <iframe
+                src="https://www.youtube.com/embed/VIDEO_ID"
+                title="Fluid Mechanics Lecture 03"
+                allowfullscreen>
+            </iframe>
+
+
+            <h3>
+                Lecture 03 — Material Derivative
+            </h3>
+
+
+            <p>
+                From Eulerian fields to Lagrangian particles.
+            </p>
+
+        </div>
+
+
+        <!-- VIDEO 4 -->
+
+        <div class="video">
+
+            <iframe
+                src="https://www.youtube.com/embed/VIDEO_ID"
+                title="Fluid Mechanics Lecture 04"
+                allowfullscreen>
+            </iframe>
+
+
+            <h3>
+                Lecture 04 — Vorticity
+            </h3>
+
+
+            <p>
+                Understanding rotation in fluid flows.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     RESEARCH
+========================================================= -->
+
+<section id="research">
+
+    <div class="section-header">
+
+        <h2 class="section-title">
+            Research
+        </h2>
+
+        <span class="section-number">
+            06
+        </span>
+
+    </div>
+
+
+    <!-- HAILCAST -->
+
+    <div class="research-item">
+
+        <h3>
+            HAILCAST
+        </h3>
+
+
+        <div>
+
+            <p>
+
+                Python implementation and machine-learning
+                emulation of hail prediction physics,
+                with applications to atmospheric modelling.
+
+            </p>
+
+
+            <div class="research-tags">
+
+                <span class="tag">
+                    Atmospheric Science
+                </span>
+
+                <span class="tag">
+                    Hail Physics
+                </span>
+
+                <span class="tag">
+                    Machine Learning
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CLOUD -->
+
+    <div class="research-item">
+
+        <h3>
+            Cloud Dynamics
+        </h3>
+
+
+        <div>
+
+            <p>
+
+                Understanding cloud and convective processes
+                using computational fluid dynamics,
+                atmospheric models and scientific machine learning.
+
+            </p>
+
+
+            <div class="research-tags">
+
+                <span class="tag">
+                    Cloud Physics
+                </span>
+
+                <span class="tag">
+                    Convection
+                </span>
+
+                <span class="tag">
+                    LES
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ROM -->
+
+    <div class="research-item">
+
+        <h3>
+            Reduced-Order Modelling
+        </h3>
+
+
+        <div>
+
+            <p>
+
+                Data-driven representations of complex
+                fluid systems using reduced-order modelling,
+                neural operators and dynamical systems.
+
+            </p>
+
+
+            <div class="research-tags">
+
+                <span class="tag">
+                    ROM
+                </span>
+
+                <span class="tag">
+                    FNO
+                </span>
+
+                <span class="tag">
+                    GNN
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SCI ML -->
+
+    <div class="research-item">
+
+        <h3>
+            Scientific Machine Learning
+        </h3>
+
+
+        <div>
+
+            <p>
+
+                Combining physical structure with
+                modern machine-learning methods for
+                modelling physical systems.
+
+            </p>
+
+
+            <div class="research-tags">
+
+                <span class="tag">
+                    PINNs
+                </span>
+
+                <span class="tag">
+                    Neural Operators
+                </span>
+
+                <span class="tag">
+                    Physics
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     PUBLICATIONS
+========================================================= -->
+
+<section id="publications">
+
+    <div class="section-header">
+
+        <h2 class="section-title">
+            Publications
+        </h2>
+
+        <span class="section-number">
+            07
+        </span>
+
+    </div>
+
+
+    <div class="blog-post">
+
+        <div class="blog-date">
+            RESEARCH
+        </div>
+
+        <div class="blog-content">
+
+            <h3>
+                Publications & Preprints
+            </h3>
+
+            <p>
+
+                A growing collection of research papers,
+                conference contributions and technical reports.
+
+            </p>
+
+            <a href="#" class="read-more">
+                View publications →
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
 
 <footer>
-  <p>&copy; 2025 Himanshu Raj</p>
+
+    <div>
+
+        © 2026 Himanshu Raj
+
+    </div>
+
+
+    <div>
+
+        Mathematics · Fluid Mechanics · Scientific Computing
+
+    </div>
+
 </footer>
 
+
+
 </body>
+
 </html>
