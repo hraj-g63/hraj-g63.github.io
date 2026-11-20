@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support Vector Machines — Spectral Labs</title>
+  <meta name="description" content="Mathematical notes on Support Vector Machines: margins, primal and dual optimisation, KKT conditions, kernels and Python implementation.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    :root {
+      --paper: #fafafa;
+      --ink: #171717;
+      --muted: #666;
+      --line: #dedede;
+      --blue: #285b83;
+      --pale: #edf3f7;
+      --dark: #171717;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+    body {
+      background: var(--paper); color: var(--ink);
+      font-family: "Inter", sans-serif; line-height: 1.75;
+    }
+    a { color: inherit; text-decoration: none; }
+    nav {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(250,250,250,.95); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line); padding: 17px 7%;
+      display: flex; justify-content: space-between; align-items: center; gap: 20px;
+    }
+    .logo { font-size: 14px; font-weight: 700; letter-spacing: 2px; }
+    .nav-links { display: flex; flex-wrap: wrap; gap: 22px; list-style: none; font-size: 12px; color: #555; }
+    .nav-links a:hover, .back-link:hover { color: var(--blue); }
+    .page { max-width: 1120px; margin: auto; padding: 0 7%; }
+    .hero { padding: 105px 0 65px; border-bottom: 1px solid var(--line); }
+    .eyebrow { color: #888; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 22px; }
+    h1, h2, h3 { font-family: "Playfair Display", serif; font-weight: 400; }
+    h1 { font-size: clamp(43px, 7vw, 76px); line-height: 1.08; max-width: 850px; margin-bottom: 25px; }
+    .hero p { color: var(--muted); max-width: 720px; font-size: 17px; }
+    .meta { margin-top: 25px; color: #888; font-size: 11px; letter-spacing: 1.3px; text-transform: uppercase; }
+    .layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 65px; padding: 65px 0 100px; }
+    aside { position: sticky; top: 95px; align-self: start; }
+    aside h3 { font-size: 20px; margin-bottom: 15px; }
+    aside ol { padding-left: 18px; color: #666; font-size: 12px; line-height: 2.1; }
+    aside a:hover { color: var(--blue); }
+    article { min-width: 0; }
+    section.note-section { padding: 0 0 48px; margin-bottom: 48px; border-bottom: 1px solid var(--line); }
+    h2 { font-size: 34px; line-height: 1.25; margin-bottom: 20px; }
+    h3.subhead { font-size: 23px; margin: 30px 0 12px; }
+    p { margin: 12px 0; }
+    ul, ol { margin: 12px 0 12px 23px; }
+    li { margin: 5px 0; }
+    .equation {
+      overflow-x: auto; margin: 22px 0; padding: 22px 20px;
+      background: white; border: 1px solid var(--line); font-size: 16px;
+    }
+    .callout {
+      background: var(--pale); border-left: 3px solid var(--blue);
+      padding: 18px 22px; margin: 24px 0; color: #344452;
+    }
+    .warning {
+      background: #f7f2e9; border-left: 3px solid #a77a32;
+      padding: 18px 22px; margin: 24px 0;
+    }
+    .table-wrap { overflow-x: auto; margin: 22px 0; }
+    table { border-collapse: collapse; width: 100%; min-width: 570px; font-size: 13px; }
+    th, td { text-align: left; vertical-align: top; padding: 13px 14px; border-bottom: 1px solid var(--line); }
+    th { font-weight: 600; color: #333; background: #f0f0f0; }
+    pre {
+      overflow-x: auto; background: #191d21; color: #edf2f5;
+      padding: 22px; margin: 20px 0; font: 12px/1.7 "SFMono-Regular", Consolas, monospace;
+      border-radius: 2px;
+    }
+    code { font-family: "SFMono-Regular", Consolas, monospace; }
+    .tag { display: inline-block; border: 1px solid #ccc; padding: 3px 9px; margin: 5px 5px 0 0; color: #666; font-size: 10px; letter-spacing: .5px; }
+    .question-list li { margin-bottom: 10px; }
+    .back-link { display: inline-block; margin-top: 30px; border-bottom: 1px solid #999; padding-bottom: 3px; font-size: 12px; }
+    footer {
+      border-top: 1px solid var(--line); padding: 35px 7%;
+      display: flex; justify-content: space-between; gap: 15px;
+      color: #888; font-size: 11px; max-width: 1120px; margin: auto;
+    }
+    @media (max-width: 850px) {
+      .layout { grid-template-columns: 1fr; gap: 35px; }
+      aside { position: static; border: 1px solid var(--line); padding: 20px; }
+      aside ol { columns: 2; }
+      nav { flex-direction: column; }
+      .nav-links { justify-content: center; gap: 12px 18px; }
+      .hero { padding-top: 75px; }
+    }
+    @media (max-width: 520px) {
+      .page { padding: 0 5%; }
+      aside ol { columns: 1; }
+      h2 { font-size: 29px; }
+      footer { flex-direction: column; }
+    }
+  </style>
+</head>
+
+<body>
+<nav>
+  <a href="../index.html" class="logo">SPECTRAL LABS</a>
+  <ul class="nav-links">
+    <li><a href="../index.html#mathematics">Mathematics</a></li>
+    <li><a href="../index.html#fluids">Fluids</a></li>
+    <li><a href="../index.html#blog">Notes</a></li>
+    <li><a href="../index.html#research">Research</a></li>
+  </ul>
+</nav>
+
+<main class="page">
+  <header class="hero">
+    <div class="eyebrow">Machine Learning · Supervised Learning · Classification</div>
+    <h1>Support Vector Machines</h1>
+    <p>
+      A mathematical treatment of maximum-margin classification, constrained optimisation,
+      Lagrangian duality and kernel methods. The goal is to understand not only how an SVM
+      predicts, but why its optimisation problem takes this form.
+    </p>
+    <div class="meta">Mathematical Notes &nbsp;·&nbsp; Spectral Labs &nbsp;·&nbsp; Updated 2026</div>
+    <a class="back-link" href="../index.html#blog">← Back to mathematical notes</a>
+  </header>
+
+  <div class="layout">
+    <aside>
+      <h3>Contents</h3>
+      <ol>
+        <li><a href="#intro">What is an SVM?</a></li>
+        <li><a href="#geometry">Hyperplane and margin</a></li>
+        <li><a href="#hard-margin">Hard-margin SVM</a></li>
+        <li><a href="#dual">Lagrangian duality</a></li>
+        <li><a href="#kkt">KKT conditions</a></li>
+        <li><a href="#soft-margin">Soft-margin SVM</a></li>
+        <li><a href="#kernel">Kernel trick</a></li>
+        <li><a href="#decision">Decision function</a></li>
+        <li><a href="#multiclass">Multiclass SVM</a></li>
+        <li><a href="#svr">Support vector regression</a></li>
+        <li><a href="#python">Python implementation</a></li>
+        <li><a href="#practice">Questions and workflow</a></li>
+      </ol>
+    </aside>
+
+    <article>
+      <section class="note-section" id="intro">
+        <h2>1. What is a Support Vector Machine?</h2>
+        <p>
+          A <strong>Support Vector Machine (SVM)</strong> is a supervised learning method
+          used primarily for classification. It searches for a decision boundary that
+          separates classes while maximising the margin: the distance from the boundary
+          to the closest training observations.
+        </p>
+        <p>For a binary classification dataset, write</p>
+        <div class="equation">
+          $$\mathcal{D}=\{(\mathbf{x}_i,y_i)\}_{i=1}^{N},\qquad
+          \mathbf{x}_i\in\mathbb{R}^{d},\quad y_i\in\{-1,+1\}.$$
+        </div>
+        <p>A linear decision boundary is a hyperplane:</p>
+        <div class="equation">
+          $$\mathbf{w}^{T}\mathbf{x}+b=0,$$
+          $$\hat y(\mathbf{x})=\operatorname{sign}
+          \left(\mathbf{w}^{T}\mathbf{x}+b\right).$$
+        </div>
+        <div class="callout">
+          <strong>Central idea.</strong> An SVM does not simply find any separating
+          hyperplane. The maximum-margin classifier selects a separator with the largest
+          possible geometric margin, subject to its constraints.
+        </div>
+      </section>
+
+      <section class="note-section" id="geometry">
+        <h2>2. Geometry of a hyperplane and the margin</h2>
+        <h3 class="subhead">2.1 Distance from a point to a hyperplane</h3>
+        <p>For the hyperplane \(\mathbf{w}^{T}\mathbf{x}+b=0\), the signed perpendicular distance of a point \(\mathbf{x}_0\) is</p>
+        <div class="equation">
+          $$d_s(\mathbf{x}_0,\mathcal{H})=
+          \frac{\mathbf{w}^{T}\mathbf{x}_0+b}{\|\mathbf{w}\|_2}.$$
+        </div>
+        <p>The absolute distance is the absolute value of this expression. The vector \(\mathbf{w}\) is normal to the hyperplane.</p>
+
+        <h3 class="subhead">2.2 Canonical scaling</h3>
+        <p>Correct classification requires</p>
+        <div class="equation">
+          $$y_i(\mathbf{w}^{T}\mathbf{x}_i+b)>0.$$
+        </div>
+        <p>Because multiplying \(\mathbf{w}\) and \(b\) by the same positive constant does not change the boundary, we choose a convenient scaling:</p>
+        <div class="equation">
+          $$y_i(\mathbf{w}^{T}\mathbf{x}_i+b)\geq 1.$$
+        </div>
+        <p>The two supporting hyperplanes are \(\mathbf{w}^{T}\mathbf{x}+b=+1\) and \(\mathbf{w}^{T}\mathbf{x}+b=-1\). Their separation is</p>
+        <div class="equation">
+          $$\text{Margin width}=\frac{2}{\|\mathbf{w}\|_2}.$$
+        </div>
+        <p>Therefore, maximising the margin is equivalent to minimising \(\|\mathbf{w}\|_2\), or its square.</p>
+      </section>
+
+      <section class="note-section" id="hard-margin">
+        <h2>3. Hard-margin SVM</h2>
+        <p>The hard-margin formulation assumes that the training data are linearly separable. Its primal optimisation problem is</p>
+        <div class="equation">
+          $$\boxed{
+          \begin{aligned}
+          \min_{\mathbf{w},b}\quad &\frac{1}{2}\|\mathbf{w}\|_2^2\\
+          \text{subject to}\quad&
+          y_i(\mathbf{w}^{T}\mathbf{x}_i+b)\geq 1,\quad i=1,\ldots,N.
+          \end{aligned}}$$
+        </div>
+        <p>The factor \(1/2\) is included for algebraic convenience because the gradient of \(\frac12\mathbf{w}^{T}\mathbf{w}\) is simply \(\mathbf{w}\).</p>
+        <h3 class="subhead">Why is this a convex problem?</h3>
+        <ul>
+          <li>The objective is a convex quadratic function.</li>
+          <li>Each constraint is affine in \(\mathbf{w}\) and \(b\).</li>
+          <li>The feasible set is convex, so any local optimum is also a global optimum.</li>
+        </ul>
+        <div class="callout">
+          Hard-margin SVM is not appropriate when the data are non-separable or contain
+          substantial label noise. The soft-margin formulation addresses this limitation.
+        </div>
+      </section>
+
+      <section class="note-section" id="dual">
+        <h2>4. Lagrangian and the dual problem</h2>
+        <p>Write the constraints as \(1-y_i(\mathbf{w}^{T}\mathbf{x}_i+b)\leq 0\), and introduce multipliers \(\alpha_i\geq0\). The Lagrangian is</p>
+        <div class="equation">
+          $$\mathcal{L}(\mathbf{w},b,\boldsymbol{\alpha})
+          =\frac12\|\mathbf{w}\|^2+
+          \sum_{i=1}^{N}\alpha_i
+          \left[1-y_i(\mathbf{w}^{T}\mathbf{x}_i+b)\right].$$
+        </div>
+        <h3 class="subhead">4.1 Stationarity with respect to \(\mathbf{w}\)</h3>
+        <div class="equation">
+          $$\frac{\partial\mathcal{L}}{\partial\mathbf{w}}
+          =\mathbf{w}-\sum_{i=1}^{N}\alpha_i y_i\mathbf{x}_i=0,$$
+          $$\boxed{\mathbf{w}=\sum_{i=1}^{N}\alpha_i y_i\mathbf{x}_i.}$$
+        </div>
+        <h3 class="subhead">4.2 Stationarity with respect to \(b\)</h3>
+        <div class="equation">
+          $$\frac{\partial\mathcal{L}}{\partial b}
+          =-\sum_{i=1}^{N}\alpha_i y_i=0
+          \quad\Longrightarrow\quad
+          \boxed{\sum_{i=1}^{N}\alpha_i y_i=0.}$$
+        </div>
+        <h3 class="subhead">4.3 The dual optimisation problem</h3>
+        <p>Substituting the stationarity conditions into the Lagrangian gives</p>
+        <div class="equation">
+          $$\boxed{
+          \begin{aligned}
+          \max_{\boldsymbol{\alpha}}\quad&
+          \sum_{i=1}^{N}\alpha_i-
+          \frac12\sum_{i=1}^{N}\sum_{j=1}^{N}
+          \alpha_i\alpha_j y_i y_j\mathbf{x}_i^{T}\mathbf{x}_j\\
+          \text{subject to}\quad&
+          \alpha_i\geq0,\qquad
+          \sum_{i=1}^{N}\alpha_i y_i=0.
+          \end{aligned}}$$
+        </div>
+        <p>Notice that the training observations occur through inner products \(\mathbf{x}_i^{T}\mathbf{x}_j\). This observation leads directly to the kernel trick.</p>
+      </section>
+
+      <section class="note-section" id="kkt">
+        <h2>5. Karush–Kuhn–Tucker conditions</h2>
+        <p>The KKT conditions characterise optimality for this constrained convex problem.</p>
+        <ol>
+          <li><strong>Primal feasibility:</strong> \(y_i(\mathbf{w}^{T}\mathbf{x}_i+b)-1\geq0\).</li>
+          <li><strong>Dual feasibility:</strong> \(\alpha_i\geq0\).</li>
+          <li><strong>Stationarity:</strong> \(\mathbf{w}=\sum_i\alpha_i y_i\mathbf{x}_i\), and \(\sum_i\alpha_i y_i=0\).</li>
+          <li><strong>Complementary slackness:</strong></li>
+        </ol>
+        <div class="equation">
+          $$\boxed{\alpha_i
+          \left[y_i(\mathbf{w}^{T}\mathbf{x}_i+b)-1\right]=0.}$$
+        </div>
+        <h3 class="subhead">Support vectors</h3>
+        <p>If \(\alpha_i>0\), complementary slackness requires</p>
+        <div class="equation">
+          $$y_i(\mathbf{w}^{T}\mathbf{x}_i+b)=1.$$
+        </div>
+        <p>Such observations lie on a supporting margin hyperplane and are called <strong>support vectors</strong>. Points strictly outside the margin have \(\alpha_i=0\). Consequently, the optimal weight vector is determined by the support vectors:</p>
+        <div class="equation">
+          $$\mathbf{w}=\sum_{i\in SV}\alpha_i y_i\mathbf{x}_i.$$
+        </div>
+      </section>
+
+      <section class="note-section" id="soft-margin">
+        <h2>6. Soft-margin SVM</h2>
+        <p>For non-separable or noisy data, introduce slack variables \(\xi_i\geq0\) that permit margin violations:</p>
+        <div class="equation">
+          $$y_i(\mathbf{w}^{T}\mathbf{x}_i+b)\geq1-\xi_i.$$
+        </div>
+        <p>The primal problem becomes</p>
+        <div class="equation">
+          $$\boxed{
+          \begin{aligned}
+          \min_{\mathbf{w},b,\boldsymbol{\xi}}\quad&
+          \frac12\|\mathbf{w}\|^2+C\sum_{i=1}^{N}\xi_i\\
+          \text{subject to}\quad&
+          y_i(\mathbf{w}^{T}\mathbf{x}_i+b)\geq1-\xi_i,\\
+          &\xi_i\geq0.
+          \end{aligned}}$$
+        </div>
+        <p>The regularisation parameter \(C>0\) controls the trade-off between margin size and training violations.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Parameter choice</th><th>Effect</th></tr></thead>
+            <tbody>
+              <tr><td>Large \(C\)</td><td>Penalises violations strongly; the model prioritises fitting training observations.</td></tr>
+              <tr><td>Small \(C\)</td><td>Allows more violations in exchange for stronger regularisation.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3 class="subhead">6.1 Hinge loss</h3>
+        <p>For the score \(f(\mathbf{x})=\mathbf{w}^{T}\mathbf{x}+b\), the hinge loss is</p>
+        <div class="equation">
+          $$\ell_{\text{hinge}}(y,f(\mathbf{x}))
+          =\max\left(0,1-yf(\mathbf{x})\right).$$
+        </div>
+        <p>The soft-margin objective can therefore be expressed as</p>
+        <div class="equation">
+          $$\min_{\mathbf{w},b}\quad
+          \frac12\|\mathbf{w}\|^2+
+          C\sum_{i=1}^{N}
+          \max\left(0,1-y_i(\mathbf{w}^{T}\mathbf{x}_i+b)\right).$$
+        </div>
+        <h3 class="subhead">6.2 Soft-margin dual</h3>
+        <div class="equation">
+          $$\boxed{
+          \begin{aligned}
+          \max_{\boldsymbol{\alpha}}\quad&
+          \sum_i\alpha_i-\frac12\sum_{i,j}
+          \alpha_i\alpha_j y_i y_j\mathbf{x}_i^{T}\mathbf{x}_j\\
+          \text{subject to}\quad&
+          0\leq\alpha_i\leq C,\qquad
+          \sum_i\alpha_i y_i=0.
+          \end{aligned}}$$
+        </div>
+        <p>The upper bound \(C\) on each multiplier is the key difference from the hard-margin dual.</p>
+      </section>
+
+      <section class="note-section" id="kernel">
+        <h2>7. The kernel trick</h2>
+        <p>A linear separator in the original feature space may not separate nonlinear class structure. Map inputs through a feature transformation \(\phi:\mathbb{R}^{d}\rightarrow\mathcal{H}\). The dual problem then uses inner products in the transformed space:</p>
+        <div class="equation">
+          $$K(\mathbf{x}_i,\mathbf{x}_j)
+          =\langle\phi(\mathbf{x}_i),\phi(\mathbf{x}_j)\rangle_{\mathcal{H}}.$$
+        </div>
+        <p>A kernel computes this inner product without explicitly constructing the transformed feature vectors.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Kernel</th><th>Definition</th><th>Typical behaviour</th></tr></thead>
+            <tbody>
+              <tr><td>Linear</td><td>\(K(\mathbf{x},\mathbf{z})=\mathbf{x}^{T}\mathbf{z}\)</td><td>Linear decision boundary.</td></tr>
+              <tr><td>Polynomial</td><td>\(K(\mathbf{x},\mathbf{z})=(\gamma\mathbf{x}^{T}\mathbf{z}+r)^p\)</td><td>Polynomial feature interactions.</td></tr>
+              <tr><td>Gaussian RBF</td><td>\(K(\mathbf{x},\mathbf{z})=\exp(-\gamma\|\mathbf{x}-\mathbf{z}\|^2)\)</td><td>Flexible nonlinear boundaries.</td></tr>
+              <tr><td>Sigmoid</td><td>\(K(\mathbf{x},\mathbf{z})=\tanh(\gamma\mathbf{x}^{T}\mathbf{z}+r)\)</td><td>Similarity form related to neural-network activations; validity is not automatic.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout">
+          A valid kernel must produce a positive-semidefinite Gram matrix for every finite
+          collection of inputs. An arbitrary similarity function is not necessarily a valid kernel.
+        </div>
+        <h3 class="subhead">Understanding the RBF parameter \(\gamma\)</h3>
+        <p>Under the common Gaussian parameterisation, \(\gamma=1/(2\sigma^2)\). A large \(\gamma\) makes similarity decay rapidly with distance and can create highly local decision boundaries. A small \(\gamma\) produces smoother, more global behaviour.</p>
+      </section>
+
+      <section class="note-section" id="decision">
+        <h2>8. Kernel SVM decision function</h2>
+        <p>In feature space, the optimal weight vector is</p>
+        <div class="equation">
+          $$\mathbf{w}=\sum_{i=1}^{N}\alpha_i y_i\phi(\mathbf{x}_i).$$
+        </div>
+        <p>For a new input \(\mathbf{x}\), the decision score is</p>
+        <div class="equation">
+          $$\boxed{
+          f(\mathbf{x})=
+          \sum_{i=1}^{N}\alpha_i y_iK(\mathbf{x}_i,\mathbf{x})+b.
+          }$$
+          $$\hat y(\mathbf{x})=\operatorname{sign}(f(\mathbf{x})).$$
+        </div>
+        <p>Only support vectors have nonzero multipliers, so the sum can be restricted to the support vectors.</p>
+        <h3 class="subhead">Recovering the intercept</h3>
+        <p>For a soft-margin support vector satisfying \(0<\alpha_i<C\), the KKT conditions give \(y_i f(\mathbf{x}_i)=1\). Hence,</p>
+        <div class="equation">
+          $$b=y_i-\sum_{j=1}^{N}\alpha_jy_jK(\mathbf{x}_j,\mathbf{x}_i).$$
+        </div>
+        <p>In practice, this expression is often averaged over support vectors with \(0<\alpha_i<C\).</p>
+      </section>
+
+      <section class="note-section" id="multiclass">
+        <h2>9. Multiclass classification</h2>
+        <p>The standard SVM formulation is binary. Multiclass classification is commonly built by combining binary classifiers:</p>
+        <ul>
+          <li><strong>One-vs-Rest (OvR):</strong> Train one classifier for each class against all other classes. For \(K\) classes, train \(K\) classifiers.</li>
+          <li><strong>One-vs-One (OvO):</strong> Train a classifier for every pair of classes. This requires \(K(K-1)/2\) classifiers.</li>
+        </ul>
+        <p>The final class is selected using decision scores or a voting procedure, depending on the implementation.</p>
+      </section>
+
+      <section class="note-section" id="svr">
+        <h2>10. Support Vector Regression</h2>
+        <p>SVM principles also extend to regression. In \(\epsilon\)-SVR, the model seeks a function \(f(\mathbf{x})=\mathbf{w}^{T}\phi(\mathbf{x})+b\) that is as flat as possible while tolerating errors up to \(\epsilon\).</p>
+        <div class="equation">
+          $$\boxed{
+          \begin{aligned}
+          \min_{\mathbf{w},b,\xi_i,\xi_i^*}\quad&
+          \frac12\|\mathbf{w}\|^2+
+          C\sum_{i=1}^{N}(\xi_i+\xi_i^*)\\
+          \text{subject to}\quad&
+          y_i-f(\mathbf{x}_i)\leq\epsilon+\xi_i,\\
+          &f(\mathbf{x}_i)-y_i\leq\epsilon+\xi_i^*,\\
+          &\xi_i,\xi_i^*\geq0.
+          \end{aligned}}$$
+        </div>
+        <p>The \(\epsilon\)-insensitive loss is</p>
+        <div class="equation">
+          $$L_\epsilon(y,f(\mathbf{x}))
+          =\max\left(0,|y-f(\mathbf{x})|-\epsilon\right).$$
+        </div>
+        <p>Unlike classification SVM, SVR predicts a continuous value.</p>
+      </section>
+
+      <section class="note-section" id="python">
+        <h2>11. Python implementation</h2>
+        <p>This example uses a scikit-learn pipeline so that feature scaling is fitted separately within each cross-validation fold. The test set remains untouched during model selection.</p>
+        <pre><code>from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
+from sklearn.metrics import classification_report, confusion_matrix
+
+# Load a binary classification dataset
+X, y = load_breast_cancer(return_X_y=True)
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+
+# Scaling is fitted inside each cross-validation fold
+pipeline = Pipeline([
+    ("scaler", StandardScaler()),
+    ("svm", SVC())
+])
+
+param_grid = {
+    "svm__kernel": ["linear", "rbf"],
+    "svm__C": [0.1, 1, 10, 100],
+    "svm__gamma": ["scale", 0.01, 0.1, 1]
+}
+
+search = GridSearchCV(
+    pipeline, param_grid, cv=5, scoring="f1", n_jobs=-1
+)
+search.fit(X_train, y_train)
+
+pred = search.predict(X_test)
+
+print("Best parameters:", search.best_params_)
+print(confusion_matrix(y_test, pred))
+print(classification_report(y_test, pred))</code></pre>
+        <div class="warning">
+          <strong>Common mistake:</strong> do not fit a scaler on the entire dataset before
+          splitting into training and test sets. That leaks information from the test set.
+          Put preprocessing inside a pipeline and fit it only on training folds.
+        </div>
+      </section>
+
+      <section class="note-section" id="practice">
+        <h2>12. Practical workflow and questions</h2>
+        <h3 class="subhead">A disciplined modelling workflow</h3>
+        <ol>
+          <li>Inspect features, labels, missing values and class balance.</li>
+          <li>Split the data into training and test sets before fitting preprocessing steps.</li>
+          <li>Standardise features using training data only.</li>
+          <li>Establish a baseline with a linear SVM.</li>
+          <li>Compare kernels when nonlinear structure is plausible.</li>
+          <li>Tune \(C\), and for RBF also tune \(\gamma\), using cross-validation.</li>
+          <li>Evaluate once on the held-out test set using appropriate metrics.</li>
+          <li>Inspect errors and consider whether probability calibration is required.</li>
+        </ol>
+
+        <h3 class="subhead">Conceptual questions</h3>
+        <ol class="question-list">
+          <li>Why does maximising the margin correspond to minimising \(\frac12\|\mathbf{w}\|^2\)?</li>
+          <li>Why is the standard SVM optimisation problem convex?</li>
+          <li>What is the geometric meaning of a support vector?</li>
+          <li>Why do most training points have \(\alpha_i=0\)?</li>
+          <li>What does complementary slackness tell us?</li>
+          <li>How does \(C\) affect the margin and training violations?</li>
+          <li>Why does the dual formulation make the kernel trick possible?</li>
+          <li>What condition must a valid kernel satisfy?</li>
+          <li>How do \(C\) and \(\gamma\) influence an RBF SVM?</li>
+          <li>Why must scaling be fitted on training data only?</li>
+        </ol>
+
+        <h3 class="subhead">Derivation checklist</h3>
+        <div class="equation">
+          $$\text{Hyperplane}\rightarrow\text{Geometric margin}
+          \rightarrow\text{Primal problem}\rightarrow\text{Lagrangian}$$
+          $$\rightarrow\text{Stationarity}\rightarrow\text{Dual problem}
+          \rightarrow\text{KKT conditions}\rightarrow\text{Support vectors}$$
+          $$\rightarrow\text{Kernel function}\rightarrow\text{Decision rule}.$$
+        </div>
+        <h3 class="subhead">Strengths and limitations</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Strengths</th><th>Limitations</th></tr></thead>
+            <tbody>
+              <tr><td>Effective in high-dimensional feature spaces.</td><td>Training can be expensive for very large datasets.</td></tr>
+              <tr><td>Can model nonlinear boundaries through kernels.</td><td>Kernel and hyperparameter selection can be difficult.</td></tr>
+              <tr><td>Convex objective for the standard formulation.</td><td>Sensitive to feature scaling.</td></tr>
+              <tr><td>Final decision function depends on support vectors.</td><td>Does not directly provide calibrated probabilities.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="note-section" id="references">
+        <h2>Further reading</h2>
+        <ul>
+          <li>Cortes, C. and Vapnik, V. (1995). “Support-vector networks.” <em>Machine Learning</em>, 20, 273–297.</li>
+          <li>Boser, B. E., Guyon, I. M. and Vapnik, V. N. (1992). “A training algorithm for optimal margin classifiers.” <em>Proceedings of the Fifth Annual Workshop on Computational Learning Theory</em>.</li>
+          <li>Burges, C. J. C. (1998). “A tutorial on support vector machines for pattern recognition.” <em>Data Mining and Knowledge Discovery</em>, 2, 121–167.</li>
+          <li><a href="https://scikit-learn.org/stable/modules/svm.html" target="_blank" rel="noopener">scikit-learn: Support Vector Machines documentation</a>.</li>
+        </ul>
+        <div>
+          <span class="tag">SUPERVISED LEARNING</span>
+          <span class="tag">OPTIMISATION</span>
+          <span class="tag">KERNEL METHODS</span>
+          <span class="tag">MATHEMATICAL ML</span>
+        </div>
+      </section>
+    </article>
+  </div>
+</main>
+
+<footer>
+  <div>© 2026 Himanshu Raj · Spectral Labs</div>
+  <div>Mathematics · Fluid Mechanics · Scientific Computing</div>
+</footer>
+</body>
+</html>
