@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Essence — Spectral Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: #fff; color: #111; font-family: Inter, sans-serif; line-height: 1.75; }
+a { color: inherit; text-decoration: none; }
+nav { position: sticky; top: 0; z-index: 10; display: flex; justify-content: space-between; align-items: center; padding: 20px 7%; background: rgba(255,255,255,.96); border-bottom: 1px solid #111; }
+.logo { font-size: 14px; letter-spacing: 2px; font-weight: 600; }
+.nav-link { font-size: 13px; }
+main { max-width: 1050px; margin: auto; padding: 100px 7% 120px; }
+.eyebrow { color: #777; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 22px; }
+h1 { font: 400 clamp(48px, 8vw, 86px)/1.05 "Playfair Display", serif; letter-spacing: -2px; margin-bottom: 25px; }
+.intro { max-width: 650px; color: #555; font-size: 16px; margin-bottom: 65px; }
+.prayers { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #111; border: 1px solid #111; }
+.prayer { background: #fff; padding: 34px; }
+.prayer.featured { grid-column: 1 / -1; background: #111; color: #fff; }
+.ref { color: #777; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 17px; }
+.featured .ref { color: #aaa; }
+h2 { font: 400 27px/1.3 "Playfair Display", serif; margin-bottom: 20px; }
+.verse { font: 400 17px/1.9 "Playfair Display", serif; overflow-wrap: anywhere; }
+.featured .verse { font-size: 21px; }
+.reflection { margin-top: 20px; padding-top: 16px; border-top: 1px solid #ddd; color: #666; font-size: 13px; }
+.featured .reflection { border-color: #555; color: #ccc; }
+.source { display: inline-block; margin-top: 18px; border-bottom: 1px solid currentColor; padding-bottom: 3px; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+.note { margin-top: 28px; color: #777; font-size: 12px; }
+footer { border-top: 1px solid #111; padding: 28px 7%; display: flex; justify-content: space-between; color: #777; font-size: 12px; }
+@media(max-width: 700px) { .prayers { grid-template-columns: 1fr; } .prayer.featured { grid-column: auto; } main { padding-top: 70px; } nav { padding: 17px 6%; } footer { gap: 10px; flex-direction: column; } }
+</style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="index.html">SPECTRAL LABS</a>
+  <a class="nav-link" href="index.html">← Back to home</a>
+</nav>
+<main>
+  <div class="eyebrow">A space for contemplation · Śrī Brahma-saṁhitā</div>
+  <h1>Essence.</h1>
+  <p class="intro">Selected prayers from the Fifth Chapter of Śrī Brahma-saṁhitā, with brief contemplations. Read Śrīla Prabhupāda’s complete translations and purports through the linked Vedabase editions.</p>
+
+  <div class="prayers">
+    <article class="prayer featured">
+      <div class="ref">Brahma-saṁhitā · 5.1</div>
+      <h2>The Supreme Cause</h2>
+      <p class="verse">īśvaraḥ paramaḥ kṛṣṇaḥ<br> sac-cid-ānanda-vigrahaḥ<br> anādir ādir govindaḥ<br> sarva-kāraṇa-kāraṇam</p>
+      <p class="reflection">Govinda is the Supreme Lord, whose form is eternal, full of knowledge and bliss. He is the origin of everything and has no origin Himself.</p>
+      <a class="source" href="https://vedabase.io/en/library/bs/5/1/" target="_blank" rel="noopener">Read translation and purport →</a>
+    </article>
+
+    <article class="prayer">
+      <div class="ref">Brahma-saṁhitā · 5.29</div>
+      <h2>Govinda in Goloka</h2>
+      <p class="verse">cintāmaṇi-prakara-sadmasu kalpa-vṛkṣa-<br>lakṣāvṛteṣu surabhīr abhipālayantam<br>lakṣmī-sahasra-śata-sambhrama-sevyamānaṁ<br>govindam ādi-puruṣaṁ tam ahaṁ bhajāmi</p>
+      <p class="reflection">Brahmā describes the spiritual abode as a realm of transcendental beauty, where Govinda tends the surabhi cows and is lovingly served.</p>
+      <a class="source" href="https://vedabase.io/en/library/bs/5/29/" target="_blank" rel="noopener">Read translation and purport →</a>
+    </article>
+
+    <article class="prayer">
+      <div class="ref">Brahma-saṁhitā · 5.30</div>
+      <h2>The Beauty of Śyāmasundara</h2>
+      <p class="verse">veṇuṁ kvaṇantam aravinda-dalāyatākṣam-<br>barhāvataṁsam asitāmbuda-sundarāṅgam<br>kandarpa-koṭi-kamanīya-viśeṣa-śobhaṁ<br>govindam ādi-puruṣaṁ tam ahaṁ bhajāmi</p>
+      <p class="reflection">Brahmā glorifies Govinda’s enchanting form: playing the flute, adorned with a peacock feather, and beautiful like a fresh rain cloud.</p>
+      <a class="source" href="https://vedabase.io/en/library/bs/5/30/" target="_blank" rel="noopener">Read translation and purport →</a>
+    </article>
+
+    <article class="prayer">
+      <div class="ref">Brahma-saṁhitā · 5.38</div>
+      <h2>The Eyes of Devotion</h2>
+      <p class="verse">premāñjana-cchurita-bhakti-vilocanena<br>santaḥ sadaiva hṛdayeṣu vilokayanti<br>yaṁ śyāmasundaram acintya-guṇa-svarūpaṁ<br>govindam ādi-puruṣaṁ tam ahaṁ bhajāmi</p>
+      <p class="reflection">Pure devotees behold Śyāmasundara within their hearts through eyes anointed with the love of devotional service.</p>
+      <a class="source" href="https://vedabase.io/en/library/bs/5/38/" target="_blank" rel="noopener">Read translation and purport →</a>
+    </article>
+
+    <article class="prayer">
+      <div class="ref">Brahma-saṁhitā · 5.40</div>
+      <h2>The Source of Brahman</h2>
+      <p class="verse">yasya prabhā prabhavato jagad-aṇḍa-koṭi-<br>koṭiṣv aśeṣa-vasudhādi vibhūti-bhinnam<br>tad brahma niṣkalam anantam aśeṣa-bhūtaṁ<br>govindam ādi-puruṣaṁ tam ahaṁ bhajāmi</p>
+      <p class="reflection">The impersonal Brahman effulgence is described as arising from the splendour of Govinda, the primeval Lord.</p>
+      <a class="source" href="https://vedabase.io/en/library/bs/5/40/" target="_blank" rel="noopener">Read translation and purport →</a>
+    </article>
+  </div>
+  <p class="note">Sanskrit verses are shown with their chapter-and-verse references. The reflections are brief summaries, not verbatim translations. Consult the linked editions for Śrīla Prabhupāda’s complete translations and purports.</p>
+</main>
+<footer><span>© 2026 Himanshu Raj</span><span>Mathematics · Fluid Mechanics · Scientific Computing</span></footer>
+</body>
+</html>
