@@ -787,8 +787,8 @@
     
         /* ---------- SPECTRAL LABS: MONOCHROME VISUAL IDENTITY ---------- */
         body {
-            background: #fff;
-            color: #111;
+            background: #111;
+            color: #fff;
         }
 
         nav {
@@ -820,7 +820,7 @@
             background-image: url("assets/brahma-krishna.png");
             background-size: cover;
             background-position: center 42%;
-            filter: grayscale(100%) brightness(0.52) contrast(1.08);
+            filter: grayscale(100%) brightness(1.12) contrast(0.82);
             transform: scale(1.015);
         }
 
@@ -830,18 +830,18 @@
             inset: 0;
             z-index: -1;
             background: linear-gradient(90deg,
-                rgba(0,0,0,0.82) 0%,
-                rgba(0,0,0,0.58) 48%,
-                rgba(0,0,0,0.18) 100%);
+                rgba(255,255,255,0.70) 0%,
+                rgba(255,255,255,0.54) 52%,
+                rgba(255,255,255,0.34) 100%);
         }
 
-        .hero .eyebrow { color: #ddd; }
-        .hero h1 { color: #fff; max-width: 850px; }
-        .hero h1 span { color: #cfcfcf; }
-        .hero-description { color: #e3e3e3; }
+        .hero .eyebrow { color: #333; }
+        .hero h1 { color: #111; max-width: 850px; }
+        .hero h1 span { color: #444; }
+        .hero-description { color: #333; }
         .hero .button {
-            color: #fff;
-            border-color: #fff;
+            color: #111;
+            border-color: #111;
         }
         .hero .button:hover {
             background: #fff;
@@ -866,8 +866,47 @@
             .hero { min-height: 78vh; padding: 100px 7% 90px; }
             .hero::before { background-position: 58% center; }
             .hero::after {
-                background: rgba(0,0,0,0.62);
+                background: rgba(255,255,255,0.56);
             }
+        }
+
+    
+        /* ---------- LIGHT HOMEPAGE BACKGROUND ---------- */
+        body {
+            background: #fff !important;
+            color: #111 !important;
+        }
+
+        .hero {
+            background: #fff !important;
+            color: #111 !important;
+        }
+
+        .hero::before {
+            filter: grayscale(100%) brightness(1.18) contrast(0.78) !important;
+            opacity: 0.42;
+        }
+
+        .hero::after {
+            background: rgba(255,255,255,0.64) !important;
+        }
+
+        .hero .eyebrow,
+        .hero-description {
+            color: #333 !important;
+        }
+
+        .hero h1 { color: #111 !important; }
+        .hero h1 span { color: #555 !important; }
+
+        .hero .button {
+            color: #111 !important;
+            border-color: #111 !important;
+        }
+
+        .hero .button:hover {
+            background: #111 !important;
+            color: #fff !important;
         }
 
     </style>
