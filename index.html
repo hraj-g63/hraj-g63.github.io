@@ -299,6 +299,98 @@
         }
 
 
+        /* ---------- ESSENCE ---------- */
+
+        .essence-intro {
+            max-width: 720px;
+            color: #666;
+            font-size: 15px;
+            margin: -25px 0 42px;
+        }
+
+        .essence-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .essence-card {
+            background: #fff;
+            border: 1px solid #e2ded5;
+            padding: 32px;
+            transition: 0.25s;
+        }
+
+        .essence-card:hover {
+            transform: translateY(-3px);
+            border-color: #b89a58;
+        }
+
+        .essence-card.featured {
+            grid-column: 1 / -1;
+            background: #171717;
+            color: #f7f1e5;
+            border-color: #171717;
+        }
+
+        .essence-ref {
+            color: #9a8047;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .essence-card h3 {
+            font-family: "Playfair Display", serif;
+            font-size: 25px;
+            font-weight: 400;
+            margin-bottom: 18px;
+        }
+
+        .essence-verse {
+            font-family: "Playfair Display", serif;
+            font-size: 17px;
+            line-height: 1.9;
+            color: #343434;
+        }
+
+        .essence-card.featured .essence-verse {
+            color: #f7f1e5;
+            font-size: 20px;
+        }
+
+        .essence-reflection {
+            margin-top: 18px;
+            padding-top: 15px;
+            border-top: 1px solid #e5e0d6;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .essence-card.featured .essence-reflection {
+            border-color: #555;
+            color: #c9c1b2;
+        }
+
+        .essence-source {
+            display: inline-block;
+            margin-top: 18px;
+            color: #8a713e;
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-bottom: 1px solid currentColor;
+            padding-bottom: 3px;
+        }
+
+        .essence-note {
+            margin-top: 28px;
+            color: #888;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
         /* ---------- TOPICS ---------- */
 
         .topic-grid {
@@ -648,6 +740,18 @@
                 grid-template-columns: 1fr;
             }
 
+            .essence-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .essence-card.featured {
+                grid-column: auto;
+            }
+
+            .essence-card {
+                padding: 25px;
+            }
+
 
             .video-grid {
 
@@ -680,6 +784,92 @@
 
         }
 
+    
+        /* ---------- SPECTRAL LABS: MONOCHROME VISUAL IDENTITY ---------- */
+        body {
+            background: #fff;
+            color: #111;
+        }
+
+        nav {
+            background: rgba(255,255,255,0.94);
+            border-bottom: 1px solid #111;
+        }
+
+        .logo, .nav-links a { color: #111; }
+
+        .hero {
+            position: relative;
+            isolation: isolate;
+            max-width: none;
+            min-height: 88vh;
+            padding: 150px 10% 130px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: #fff;
+            background: #111;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            background-image: url("assets/brahma-krishna.png");
+            background-size: cover;
+            background-position: center 42%;
+            filter: grayscale(100%) brightness(0.52) contrast(1.08);
+            transform: scale(1.015);
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(90deg,
+                rgba(0,0,0,0.82) 0%,
+                rgba(0,0,0,0.58) 48%,
+                rgba(0,0,0,0.18) 100%);
+        }
+
+        .hero .eyebrow { color: #ddd; }
+        .hero h1 { color: #fff; max-width: 850px; }
+        .hero h1 span { color: #cfcfcf; }
+        .hero-description { color: #e3e3e3; }
+        .hero .button {
+            color: #fff;
+            border-color: #fff;
+        }
+        .hero .button:hover {
+            background: #fff;
+            color: #111;
+        }
+
+        section { border-top: 1px solid #111; }
+        .section-number, .topic-number, .blog-date { color: #777; }
+        .topic-grid { background: #111; border-color: #111; }
+        .topic { background: #fff; color: #111; }
+        .topic:hover { background: #f2f2f2; }
+        .topic p, .about-details, .blog-content p, .research-item p { color: #555; }
+        .math-feature { background: #111; color: #fff; }
+        .math-feature p { color: #bbb; }
+        .math-feature a { border-color: #fff; }
+        .video { border-color: #111; background: #fff; }
+        .research-item { border-color: #ccc; }
+        .tag { border-color: #999; color: #444; }
+        footer { border-color: #111; color: #555; }
+
+        @media(max-width: 800px) {
+            .hero { min-height: 78vh; padding: 100px 7% 90px; }
+            .hero::before { background-position: 58% center; }
+            .hero::after {
+                background: rgba(0,0,0,0.62);
+            }
+        }
+
     </style>
 
 </head>
@@ -703,6 +893,10 @@
 
         <li>
             <a href="#about">About</a>
+        </li>
+
+        <li>
+            <a href="essence.html">Essence</a>
         </li>
 
         <li>
@@ -837,11 +1031,6 @@
 
 </section>
 
-
-
-<!-- =========================================================
-     MATHEMATICS
-========================================================= -->
 
 <section id="mathematics">
 
