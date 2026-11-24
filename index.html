@@ -817,7 +817,7 @@
             position: absolute;
             inset: 0;
             z-index: -2;
-            background-image: url("assets/brahma-krishna.png");
+            background-image: none;
             background-size: cover;
             background-position: center 42%;
             filter: grayscale(100%) brightness(1.12) contrast(0.82);
@@ -909,7 +909,126 @@
             color: #fff !important;
         }
 
-    </style>
+    
+        /* ---------- PURE WHITE / BLACK SITE THEME ---------- */
+        html, body {
+            background: #fff !important;
+            color: #111 !important;
+        }
+
+        body, nav, section, footer, .hero, .topic, .video,
+        .research-item, .blog-content, .about, .math-feature,
+        .topic-grid, .essence-card, .essence-card.featured {
+            background-color: #fff !important;
+            color: #111 !important;
+            box-shadow: none !important;
+        }
+
+        nav {
+            background: rgba(255,255,255,0.97) !important;
+            border-bottom: 1px solid #ddd !important;
+        }
+
+        .logo, .nav-links a, a, h1, h2, h3, p, span, li,
+        .hero h1, .hero h1 span, .hero .eyebrow,
+        .hero-description, .section-title, .section-number,
+        .topic-number, .topic p, .math-feature p,
+        .about-details, .blog-content p, .research-item p,
+        footer {
+            color: #111 !important;
+        }
+
+        .hero {
+            background: #fff !important;
+            color: #111 !important;
+        }
+
+        .hero::before {
+            background-image: none !important;
+            background-size: cover !important;
+            background-position: center 42% !important;
+            filter: grayscale(100%) brightness(0.55) contrast(1.12) !important;
+            opacity: 0.16 !important;
+        }
+
+        .hero::after {
+            background: rgba(255,255,255,0.84) !important;
+        }
+
+        .hero .button, .button, .math-feature a {
+            color: #111 !important;
+            border-color: #111 !important;
+            background: transparent !important;
+        }
+
+        .hero .button:hover, .button:hover {
+            color: #111 !important;
+            background: #f2f2f2 !important;
+        }
+
+        .topic-grid {
+            background: #fff !important;
+            border: 1px solid #ddd !important;
+            gap: 1px !important;
+        }
+
+        .topic {
+            background: #fff !important;
+            border: 1px solid #eee !important;
+        }
+
+        .topic:hover { background: #f7f7f7 !important; }
+
+        .math-feature {
+            border: 1px solid #ddd !important;
+        }
+
+        .video, .research-item, .tag {
+            background: #fff !important;
+            border-color: #ddd !important;
+        }
+
+        .tag { color: #111 !important; }
+
+        footer {
+            background: #fff !important;
+            border-top: 1px solid #ddd !important;
+        }
+
+        @media(max-width: 800px) {
+            .hero::before {
+                background-position: 58% center !important;
+                opacity: 0.13 !important;
+            }
+            .hero::after {
+                background: rgba(255,255,255,0.88) !important;
+            }
+        }
+
+
+/* Homepage: plain white canvas — sacred painting belongs only on Essence. */
+.hero::before {
+    content: none !important;
+    display: none !important;
+    background-image: none !important;
+}
+.hero::after {
+    content: none !important;
+    display: none !important;
+    background: transparent !important;
+}
+.hero {
+    background: #fff !important;
+    color: #111 !important;
+}
+.hero .eyebrow,
+.hero h1,
+.hero h1 span,
+.hero-description {
+    color: #111 !important;
+}
+
+</style>
 
 </head>
 
